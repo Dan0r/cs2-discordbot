@@ -5,7 +5,7 @@ const { Client, IntentsBitField } = require("discord.js");
 
 
 // Selbstprogrammierte Module laden.
-const rush = require("/.rush");
+//const rush = require("/.rush");
 
 // Intents spezifizieren
 const client = new Client({
@@ -19,10 +19,10 @@ const client = new Client({
 
 // Funktionen abfeuern
 client.on("ready", () => {
-	console.log('Hallo Welt');
+	console.log(`Eingeloggt als ${client.user.tag}`);
 });
 
 // Bot einloggen
-client.login(process.env.TOKEN);
+client.login(process.env.BOT_TOKEN);
 
 
