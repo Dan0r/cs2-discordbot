@@ -4,8 +4,11 @@ require("dotenv").config();
 const { Client, IntentsBitField } = require("discord.js");
 
 
-// Selbstprogrammierte Module laden.
-//const rush = require("/.rush");
+// Horcht auf Nachrichten von Nutzern. 
+const rush = require('./rush.js');
+const moderation = require('./moderation.js');
+
+
 
 // Intents spezifizieren
 const client = new Client({
@@ -20,9 +23,11 @@ const client = new Client({
 // Funktionen abfeuern
 client.on("ready", () => {
 	console.log(`Eingeloggt als ${client.user.tag}`);
+	rush(client);
 });
 
 // Bot einloggen
 client.login(process.env.BOT_TOKEN);
+
 
 

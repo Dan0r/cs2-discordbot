@@ -7,7 +7,8 @@
     * Navigate to Discord (Developer Page)[https://discord.com/developers/applications]
     * Create Bot with Permissions:
         1. Check Intents: Mit diesen erkennt der Bots bestimmte Events, beispielsweise, dass ein Spieler dem Server beitritt.
-        2. Paste Invite Link into browser and select server
+        2. Create O2Auth: Bot and then Administrator 
+        2. Paste O2Auth-Invite Link into browser and select server
     * For the application to recognise your bot, your userid, as well as the channel that the bot is supposed to supervise, you need IDs or Tokens which give your application access to these.
         1. Create .env file in the /src directory (or main directory if using nodemon)
         2. Structure it like this:
@@ -66,3 +67,33 @@ client.on("ready", () => {
 ```
 ## Auf Chat-Nachrichten reagieren
 Als nächstes lauschen wir auf eine Nachricht die jeglicher Nutzer in den Channel schreibt. 
+
+```
+const rush = (client) => {
+	client.on("messageCreate", msg => {
+		// In case the bot writes a text including "Rush", it wont prompt itself.
+		if (msg.author.bot) return;
+		
+		if (msg.content === "Rush" || msg.content === "rush") {
+			msg.reply("B!");
+		}		
+	});
+}
+
+// Exportiert die Funktion für index.js
+module.exports = rush;
+```
+Die Funktion `rush` trägt den Parameter `client`, damit wir spater in index.js das client objekt als Parameter der Funktion übergeben können.
+DIe Funktion lauscht, ob ein Nutzer in dem Server eine Nachricht erstellt hat. Wenn das messageCreate-Event da ist, gibt es ein Message-Objekt aus. Das speichern wir in der Variable msg. Die Varible hält dann den Namen des Verfassers (username), wann die Nachricht versand wurde (timestamp) oder den Inhalt (content).
+Wenn die Eigenschaft .content also Rush oder rush ist, dann antwortet der Bot mit "B!"
+In Node.js ist jedes Skript ein Modul, und mit module.exports konnen andere Skripte auf dieselbe function zugreifen. In JavaScript exportiert man Funktionen mit module.exports, damit kann das Hauptskript auf das Modul zugreifen.
+
+## Welcome Message
+
+## Slash-Commands nutzen
+Als Administrator möchte man nicht direkt in den Chat tippen, um seinen Channel zu moderieren.
+Mit Slash Command konnen Sie direkt mit dem Bot kommunizieren: Nachdem man ein / tipp sendet man ein direktes Kommando an den Bot, etwa /kick, um einen Spieler vom Server zu schmeissen.
+
+
+Ein Administrator muss die Slash-Command erst beim Bot registrieren.
+https://discordjs.guide/creating-your-bot/slash-commands.html#individual-command-files
