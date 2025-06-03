@@ -89,6 +89,14 @@ Wenn die Eigenschaft .content also Rush oder rush ist, dann antwortet der Bot mi
 In Node.js ist jedes Skript ein Modul, und mit module.exports konnen andere Skripte auf dieselbe function zugreifen. In JavaScript exportiert man Funktionen mit module.exports, damit kann das Hauptskript auf das Modul zugreifen.
 
 ## Welcome Message
+EmbedBuilder Explanation
+
+Channge Kanal_ID to Channel_ID
+
+
+https://discord.gg/6BtShRP8
+
+
 
 ## Slash-Commands nutzen
 Als Administrator möchte man nicht direkt in den Chat tippen, um seinen Channel zu moderieren.
@@ -97,3 +105,14 @@ Mit Slash Command konnen Sie direkt mit dem Bot kommunizieren: Nachdem man ein /
 
 Ein Administrator muss die Slash-Command erst beim Bot registrieren.
 https://discordjs.guide/creating-your-bot/slash-commands.html#individual-command-files
+
+
+// discord.js-Dokumentation: "slash commands need to be registered only once"
+
+
+
+Slash commands kann man einmalig registrieren. Das hilft der Leistung des Bots
+
+
+
+Slash commands kann man einmalig registrieren. node src/registrieren-slashcommands.js', anstatt diese jedes Mal wenn der Bot startet abzuspielen. Das hilft der Leistung des Bots.
