@@ -5,9 +5,8 @@ const { Client, IntentsBitField } = require("discord.js");
 
 
 // Horcht auf Nachrichten von Nutzern. 
-const rush = require('./rush.js');
-const moderation = require('./moderation.js');
-
+const rush = require("./rush.js");
+const willkommen = require("./willkommen.js");
 
 
 // Intents spezifizieren
@@ -21,13 +20,12 @@ const client = new Client({
 });
 
 // Funktionen abfeuern
-client.on("ready", () => {
+client.on("ready", async () => {
 	console.log(`Eingeloggt als ${client.user.tag}`);
 	rush(client);
+	willkommen(client);
 });
 
 // Bot einloggen
 client.login(process.env.BOT_TOKEN);
-
-
 

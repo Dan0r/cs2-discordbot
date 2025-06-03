@@ -1,34 +1,42 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder } = require("discord.js"); // Required import
 
-// write welcome message upon a user joining
-module.exports = client => {
-	client.on('guildMemberAdd', async member => {
-	// retrieves the channel object (of the channel the user is in)
-	    try {
+const willkommen = async (client) => {
+	client.on("guildMemberAdd", async member => {
+		try {
 			const channelID = process.env.CHANNEL_ID;
 			const channel = member.guild.channels.cache.get(channelID);
 			if (!channel) {
-				console.error('Channel not found...');
+				console.error("Kanal-ID nicht gefunden ...");
 				return;
-		}
-			// defines embedded message
-			const embed = new EmbedBuilder()
-				.setTitle('Welcome to the Dune Fan Community')
-				.setURL('https://netzwerkrecherche.org/')
-				.setDescription('This is a description')
-				.setImage('https://netzwerkrecherche.org/nr25/wp-content/uploads/sites/19/2024/12/NR-Logo.png')
-				.addFields({
-					name: 'Welcome to the Dune Fan Community',
-					value: 'Tell us your favourite Dune character',
-					inline: true
-				})
-				.setColor('DarkPurple')
-			// await lets me catch the error
-			// send message and make it ephemeral ()
-		await member.send({ embeds: [embed]});
+			}
 
-	} catch(error) {
-		console.error('Failed to send welcome message...', error)
-	}
- });
+			const embed = new EmbedBuilder()
+				.setTitle("Willkommen im CS2-Treff")
+				.setURL("https://www.heise.de")
+				.setDescription("Turniere finden jeden Freitag um 18:00 Uhr statt.")
+				.setImage("https://heise.cloudimg.io/width/1008/q70.png-lossy-70.webp-lossy-70.foil1/_www-heise-de_/imgs/18/3/7/5/4/0/6/8/CS2-f3bbe059389edd94.png")
+				.addFields(
+						{
+							name: "❗ Bitte lese dir die Server-Regeln durch:",
+							value: "\u200B" // empty value to act like a heading
+						},
+						{
+							name: "Regeln",
+							value: [
+								"• Schrei nicht ins Mikrofon.",
+								"• Melde dich vor einem Turnier an.",
+								"• Nicht mitten im Spiel AFK gehen."
+							].join("\n")
+						}
+					)
+				.setColor("Orange");
+
+			await member.send({ embeds: [embed] });
+
+		} catch (error) {
+			console.error("Nachricht wurde nicht übermittelt ...", error);
+		}
+	});
 };
+
+module.exports = willkommen;
