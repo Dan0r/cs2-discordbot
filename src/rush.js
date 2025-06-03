@@ -1,7 +1,7 @@
 // Hallo-Welt-Funktion
 const rush = (client) => {
 	client.on("messageCreate", msg => {
-		// In case the bot writes a text including "Rush", it wont prompt itself.
+		// Sollte der Bot jemals selbst "Rush" schreiben, antwortet er nicht auf sich selbst.
 		if (msg.author.bot) return;
 		
 		if (msg.content === "Rush" || msg.content === "rush") {
