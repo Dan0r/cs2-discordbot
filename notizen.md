@@ -91,7 +91,7 @@ In Node.js ist jedes Skript ein Modul, und mit module.exports konnen andere Skri
 ## Welcome Message
 EmbedBuilder Explanation
 
-Channge Kanal_ID to Channel_ID
+Channge Kanal_ID to Channel_IDj
 
 
 https://discord.gg/6BtShRP8
@@ -110,9 +110,13 @@ https://discordjs.guide/creating-your-bot/slash-commands.html#individual-command
 // discord.js-Dokumentation: "slash commands need to be registered only once"
 
 
+In einem Array definieren Sie die Slash-Commands. Die jeweiligen Schlüssel finden Sie in der discord.js-Dokumentation. Beim Schlüssel name muss der Wert immer Kleinbuchstaben geschrieben werden, sodass es in diesem Beispiel diesen Befehl ergibt: /test. Dieser Befehl dient aber erst als Beispiel, um Ihnen die Registrierung zu zeigen.
+Die Registrierung übernimmt das REST-Modul von discord.js. Mit dem können Sie Anfragen an die Programmierschnittstelle stellen.
+Dafür instanziieren Sie das Rest-Objekt für Ihren Bot. Denn das erlaubt die .put()-Methode zu verwenden, die wie der Name schon sagt eine HTTP-PUT-Anfrage erstellt. Das heißt: Die API soll ein Datenpunkt aktualisieren. In diesem Fall ist das die gesamte Liste an Slash-Commands.
+Sie müssen der .put()-Methode noch mitteilen, wo die Daten aktualsiert werden sollen. Das erledigt die applicationGuildCommands()-Methode von Routes, das eine URL zum Channel des Servers erstellt. Danach senden Sie die Anfrage.
+Die Methode applicationGuildCommands() des Objekts Routes hilft dabei die korrekte URL zu erstellen, an die die Abfrage gesendet wird. Der discord.js verweist darauf, dass Sie die Slash commands als body senden sollten
 
 Slash commands kann man einmalig registrieren. Das hilft der Leistung des Bots
 
 
 
-Slash commands kann man einmalig registrieren. node src/registrieren-slashcommands.js', anstatt diese jedes Mal wenn der Bot startet abzuspielen. Das hilft der Leistung des Bots.
