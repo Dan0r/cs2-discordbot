@@ -39,7 +39,7 @@ client.on("interactionCreate", async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		await command.kickexecute(interaction);
 	} catch (error) {
 		console.error(`Fehler bei Ausführung von ${interaction.commandName}:`, error);
 		await interaction.reply({ content: "Ein Fehler ist aufgetreten.", ephemeral: true });

@@ -23,7 +23,7 @@ module.exports = {
 	},
 	
 	// Die Funktion des Slash-Commands
-	async execute(interaction) {
+	async kickexecute(interaction) {
 		const nutzer = interaction.options.getMember("user");
 		const grund = interaction.options.getString("reason") || "Kein Grund angegeben";
 
