@@ -25,28 +25,37 @@ module.exports = {
 	// Die Funktion des Slash-Commands
 	async kickexecute(interaction) {
 		const nutzer = interaction.options.getMember("user");
-		const grund = interaction.options.getString("reason") || "Kein Grund angegeben";
-
+		const grund = interaction.options.getString("reason");;
+		
+		// Kick starten.
 		await interaction.deferReply({ ephemeral: true });
 
+		// Error-Handling
 		try {
+			// Administrator schreibt Nutzernamen in den Slash-Command, aber dieser existiert nicht.
 			if (!nutzer) {
 				return await interaction.editReply("Dieser Nutzer ist nicht auf dem Server.");
 			}
 
+			// Administrator schreibt seinen eigenen Nutzernamen in den Slash-Command.
 			if (nutzer.id === interaction.guild.ownerId) {
 				return await interaction.editReply("Du kannst den Serverbesitzer nicht kicken.");
 			}
-
+			
+			/* 
+				Wichtig: Im Discord-Server eine Rolle mit dem Administrator hinzufügen, mit der sie Mitglieder kicken kann.
+				Prüfen, ob der zu kickende Nutzer eine ebenbürtige Rolle wie der Administrator hat. 
+				Wenn Sie default_member_permissions entfernen, dann prüft es, wer eine höhere Rolle hat.
+			*/
 			const botPosition = interaction.guild.members.me.roles.highest.position;
 			const submitterPosition = interaction.member.roles.highest.position;
-			const targetPosition = nutzer.roles.highest.position;
-
-			if (targetPosition >= submitterPosition) {
+			const nutzerPosition = nutzer.roles.highest.position;
+		
+			if (nutzerPosition >= submitterPosition) {
 				return await interaction.editReply("Der Nutzer hat eine höhere oder gleichwertige Rolle wie du.");
 			}
 
-			if (targetPosition >= botPosition) {
+			if (nutzerPosition >= botPosition) {
 				return await interaction.editReply("Der Nutzer hat eine höhere oder gleichwertige Rolle wie ich.");
 			}
 
