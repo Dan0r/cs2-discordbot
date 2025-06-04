@@ -30,6 +30,7 @@ client.on("ready", async () => {
 client.commands = new Collection();
 client.commands.set(kick.data.name, kick);
 
+// Auf das Auslösen des Slash-Commands warten.
 client.on("interactionCreate", async interaction => {
 	const command = client.commands.get(interaction.commandName);
 	if (!command) {

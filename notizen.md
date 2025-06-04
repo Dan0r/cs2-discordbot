@@ -119,4 +119,15 @@ Die Methode applicationGuildCommands() des Objekts Routes hilft dabei die korrek
 Slash commands kann man einmalig registrieren. Das hilft der Leistung des Bots
 
 
+## Kick
+
+https://discord.com/developers/docs/topics/permissions
+
+Sagt der Discord-API, dass nur Administratoren die Rechte für diesen Slash-Command haben: Die Discord-API nimmt den Code als String an, deswegen konvertiert die methode toString() das Bitfield der Eigenschaft KickMembers zu 2.
+https://discord.com/developers/docs/interactions/application-commands
+
+Diesesmal horcht der Bot nicht auf das "ready"-Event, sondern auf eine "interaction": Ob der Nutzer etwa einen Slash-Comand auslöst.
+Daraufhin empfängt der Bot ein Interaction-Objekt von der Discord-API.
+Die wird ein 
+
 

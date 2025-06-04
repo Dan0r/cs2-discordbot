@@ -1,41 +1,39 @@
-const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
+const { EmbedBuilder, ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
 	data: {
-		name: "kick",
-		description: "Kicks a user",
+		default_member_permissions: PermissionFlagsBits.KickMembers.toString(),
+		name: "ciao",
+		description: "Schmeißt Nutzer vom Server.",
 		options: [
 			{
 				name: "user",
-				description: "The user to be kicked",
-				type: ApplicationCommandOptionType.Mentionable,
+				description: "Der Nutzer, der gekickt werden soll.",
+				type: ApplicationCommandOptionType.User,
 				required: true,
 			},
 			{
 				name: "reason",
-				description: "The reason for the kick",
-				type: ApplicationCommandOptionType.String,
+				description: "Grund für den Kick.",
+				type: ApplicationCommandOptionType.String, // Setzt eine Nachricht bei, die Sie bei 'reason' nutzen.
 				required: false,
 			},
 		],
-		default_member_permissions: PermissionFlagsBits.KickMembers.toString(),
 	},
-	// this is the actual logic
+
 	async execute(interaction) {
-		const targetUserId = interaction.options.get("user").value;
-		const reason = interaction.options.get("reason")?.value || "No reason provided";
+		const targetUser = interaction.options.getMember("user");
+		const reason = interaction.options.getString("reason") || "Kein Grund angegeben";
 
 		await interaction.deferReply({ ephemeral: true });
 
 		try {
-			const targetUser = await interaction.guild.members.fetch(targetUserId);
-
 			if (!targetUser) {
-				return await interaction.editReply("That user doesn't exist.");
+				return await interaction.editReply("Dieser Nutzer ist nicht auf dem Server.");
 			}
 
 			if (targetUser.id === interaction.guild.ownerId) {
-				return await interaction.editReply("You cannot kick the server owner.");
+				return await interaction.editReply("Du kannst den Serverbesitzer nicht kicken.");
 			}
 
 			const botPosition = interaction.guild.members.me.roles.highest.position;
@@ -43,18 +41,34 @@ module.exports = {
 			const targetPosition = targetUser.roles.highest.position;
 
 			if (targetPosition >= submitterPosition) {
-				return await interaction.editReply("That user has a higher or equal role than you.");
+				return await interaction.editReply("Der Nutzer hat eine höhere oder gleichwertige Rolle wie du.");
 			}
 
 			if (targetPosition >= botPosition) {
-				return await interaction.editReply("That user has a higher or equal role than me.");
+				return await interaction.editReply("Der Nutzer hat eine höhere oder gleichwertige Rolle wie ich.");
 			}
 
+			// Eingebettete Nachricht mitschicken 
+			const kicknachricht = new EmbedBuilder()
+				.setTitle("Du wurdest gekickt.")
+				.addFields({ name: "Grund:", value: reason })
+				.setColor("Orange");
+
+			try {
+				await targetUser.send({ embeds: [kicknachricht] });
+			} catch (dmError) {
+				console.warn("Konnte dem Nutzer keine DM senden:", dmError);
+			}
+			
+
+
+			// Funktion ausführen
 			await targetUser.kick(reason);
-			await interaction.editReply(`Kicked ${targetUser.user.tag}. Reason: ${reason}`);
+			await interaction.editReply(`Der Administrator hat ${targetUser.user.tag} gekickt. Grund: ${reason}`);
+
 		} catch (error) {
 			console.error(error);
-			await interaction.editReply("An error occurred while trying to kick the user.");
+			await interaction.editReply("Beim Kicken des Nutzers ist ein Fehler aufgetreten.");
 		}
 	}
 };
