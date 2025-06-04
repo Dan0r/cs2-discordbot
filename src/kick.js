@@ -1,6 +1,7 @@
 const { EmbedBuilder, ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
+	// Wie Discord den Slash-Command anzeigt.
 	data: {
 		default_member_permissions: PermissionFlagsBits.KickMembers.toString(),
 		name: "ciao",
@@ -9,7 +10,7 @@ module.exports = {
 			{
 				name: "user",
 				description: "Der Nutzer, der gekickt werden soll.",
-				type: ApplicationCommandOptionType.User,
+				type: ApplicationCommandOptionType.User, // Wählt die NutzerID aus.
 				required: true,
 			},
 			{
@@ -20,25 +21,26 @@ module.exports = {
 			},
 		],
 	},
-
+	
+	// Die Funktion des Slash-Commands
 	async execute(interaction) {
-		const targetUser = interaction.options.getMember("user");
-		const reason = interaction.options.getString("reason") || "Kein Grund angegeben";
+		const nutzer = interaction.options.getMember("user");
+		const grund = interaction.options.getString("reason") || "Kein Grund angegeben";
 
 		await interaction.deferReply({ ephemeral: true });
 
 		try {
-			if (!targetUser) {
+			if (!nutzer) {
 				return await interaction.editReply("Dieser Nutzer ist nicht auf dem Server.");
 			}
 
-			if (targetUser.id === interaction.guild.ownerId) {
+			if (nutzer.id === interaction.guild.ownerId) {
 				return await interaction.editReply("Du kannst den Serverbesitzer nicht kicken.");
 			}
 
 			const botPosition = interaction.guild.members.me.roles.highest.position;
 			const submitterPosition = interaction.member.roles.highest.position;
-			const targetPosition = targetUser.roles.highest.position;
+			const targetPosition = nutzer.roles.highest.position;
 
 			if (targetPosition >= submitterPosition) {
 				return await interaction.editReply("Der Nutzer hat eine höhere oder gleichwertige Rolle wie du.");
@@ -51,20 +53,18 @@ module.exports = {
 			// Eingebettete Nachricht mitschicken 
 			const kicknachricht = new EmbedBuilder()
 				.setTitle("Du wurdest gekickt.")
-				.addFields({ name: "Grund:", value: reason })
+				.addFields({ name: "Grund:", value: grund })
 				.setColor("Orange");
 
 			try {
-				await targetUser.send({ embeds: [kicknachricht] });
-			} catch (dmError) {
-				console.warn("Konnte dem Nutzer keine DM senden:", dmError);
+				await nutzer.send({ embeds: [kicknachricht] });
+			} catch (kickError) {
+				console.warn("Konnte dem Nutzer keine DM senden:", kickError);
 			}
 			
-
-
 			// Funktion ausführen
-			await targetUser.kick(reason);
-			await interaction.editReply(`Der Administrator hat ${targetUser.user.tag} gekickt. Grund: ${reason}`);
+			await nutzer.kick(reason);
+			await interaction.editReply(`Der Administrator hat ${nutzer.user.tag} gekickt. Grund: ${reason}`);
 
 		} catch (error) {
 			console.error(error);
