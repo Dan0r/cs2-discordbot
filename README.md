@@ -1,5 +1,5 @@
 ## Discord Bot für JavaScript-Einsteiger 🤖
-Ein Repository für einen [Artikel von heise online](heise.de). Der Bot setzt auf JavaScript mit dem Framework discord.js. Er antwortet, spielt ein Willkommens-Banner aus und kickt Spieler.
+Ein Repository für einen [Artikel von heise online](https://www.heise.de/ratgeber/JavaScript-Einen-Discord-Bot-fuer-die-eigene-Gaming-Community-programmieren-10420597.html). Der Bot setzt auf JavaScript mit dem Framework discord.js. Er antwortet, spielt ein Willkommens-Banner aus und kickt Spieler.
 
 ## Installation
 Sie klonen das Repository, navigiern zu diesem und installieren die Dependenzen mit npm von [Node.js](https://nodejs.org/en). 

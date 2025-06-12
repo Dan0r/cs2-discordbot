@@ -72,7 +72,7 @@ module.exports = {
 			}
 			
 			// Funktion ausführen
-			await nutzer.kick(reason);
+			await nutzer.kick(grund);
 			await interaction.editReply(`Der Administrator hat ${nutzer.user.tag} gekickt. Grund: ${reason}`);
 
 		} catch (error) {
