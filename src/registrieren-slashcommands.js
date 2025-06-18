@@ -2,11 +2,13 @@
 require("dotenv").config();
 const { REST, Routes } = require("discord.js");
 
-const kick = require("./kick.js")
+const kick = require("./kick.js");
+const hltv = require("./hltv.js");
 // Slash-Command definieren.
 // Discord erlaubt nur Kleinbuchstaben!
 const commands = [
-	 kick.data,
+	 kick.data, 
+	 hltv.data
 ];
 
 // Instanz des REST-Moduls starten für den Bot mit dem jeweiligen Token. 

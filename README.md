@@ -20,6 +20,9 @@ Registrieren Sie die Slash-Commands. Danach sollten Sie das Skript in dem Verzei
 node src/registrieren-slashcommands.js
 nodemon
 ```
+Ein Extra ist das Zusatzmodul hltv.js, das der Artikel auslässt. Es nutzt eine unoffizielle [API der Counterstrike-Nachrichten-Website HLTV.org](https://github.com/gigobyte/HLTV), um die zehn aktuellsten Artikel zu ziehen. Das Slash-Kommando dafür lautet `/hltv`. 
+
+
 Viel Spaß beim Einstieg in JavaScript mit discord.js!
 
 

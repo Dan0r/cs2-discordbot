@@ -23,12 +23,12 @@ module.exports = {
 	},
 	
 	// Die Funktion des Slash-Commands
-	async kickexecute(interaction) {
+	async execute(interaction) {
 		const nutzer = interaction.options.getMember("user");
 		const grund = interaction.options.getString("reason");;
 		
 		// Kick starten.
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply();
 
 		// Error-Handling
 		try {
